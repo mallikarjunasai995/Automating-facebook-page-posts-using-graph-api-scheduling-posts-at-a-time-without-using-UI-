@@ -1,0 +1,1 @@
+@py.exe C:\Users\malli\OneDrive\Desktop\Embedded\python\pythonautoamation\fbvocabauto.py %*
