@@ -2,12 +2,11 @@ import requests
 import time
 import os
 from os import listdir
-from PIL import Image as PImage
-
+#from PIL import Image as PImage
 
 def loadImages(path):
     for count,filename in enumerate(listdir(path)):
-        dst = "img"+str(count)+".jpg"
+        dst = "imd"+str(count)+".jpg"
         src = path +'\\'+filename
         dst = path +'\\'+dst
         os.rename(src, dst)
@@ -21,29 +20,58 @@ def loadImages(path):
 
     return loadedImages
 
-path = r'C:\Users\malli\OneDrive\Desktop\Embedded\python\Python_Autoamtion\Vocabulary-Fbpage\templatesdesigns'
+path = r'C:\\Desktop\Embedded\python\Python_Autoamtion\Vocabulary-Fbpage\templatesdesigns'
 
 imgs = loadImages(path)
 print(type(imgs))
 
+
 #epochtimeunix remember
-def calepoch():
+def calepoch(ct):
     
-    t = int(time.time() + 97400)
+    d = 86400
+    ct = ct + 1
+    t = int(time.time() + d*ct )
+    print(t)
     return t
 
 
-img_path = r'C:\Users\malli\OneDrive\Desktop\Embedded\python\Python_Autoamtion\Vocabulary-Fbpage\templatesdesigns\img11.jpg'
+#img_path = r'C:\Users\malli\OneDrive\Desktop\Embedded\python\Python_Autoamtion\Vocabulary-Fbpage\templatesdesigns\img11.jpg'
 
 
-params = (
+
+
+for ct,img in enumerate(imgs):
+    
+    params = (
     ('published', 'false'),
-    ('scheduled_publish_time', '{}'.format(calepoch())),
-    ('access_token', 'EAAOVvtAzc6IBAOa6BJy67udgZC7GTZAPUxbaTgetGaphn2WGncHPEFZBiNMgzK2SZC7KSkhUW77KlBwm0SZBXnjZBBTwLZClvYWVFc6HjGwBTU4y6s5HeZBbhOicRyYElS3YQp84auYCF1xZCbBKeRrXAZACiGaeK3qTMx6tD1ZANLdlzqf1OliHL9ZCPArHTQ1Mc1YV3E9rBuEHigZDZD'),
-)
+    ('scheduled_publish_time', '{}'.format(calepoch(ct))),
+    ('access_token', 'yourpageaccesstoken'),
+     )
+    
 
-files = {'file': open(img_path,'rb')}
+    files = {'file': open(img,'rb')}
 
-response = requests.post('https://graph.facebook.com/v6.0/1194256010637631/photos', params=params, files=files)
-#print(params)
-print(response)
+    response = requests.post('https://graph.facebook.com/v6.0/1194256010637631/photos', params=params, files=files)
+        #print(params)
+    print(response)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
